@@ -1,0 +1,272 @@
+/* @import url() FONT IMPORTS MUST ALWAYS BE AT THE VERY TOP OF THIS FILE, ABOVE THE TAILWIND IMPORTS — DO NOT DELETE THIS COMMENT */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* CRITICAL: THE FOLLOWING TAILWIND IMPORTS MUST NEVER BE DELETED OR REORDERED — DO NOT DELETE THIS COMMENT */
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+/* END TAILWIND IMPORTS — ALL OTHER CSS MUST GO BELOW THIS LINE */
+
+/* ==========================================================================
+   EMTECH ERP v2 — design tokens
+   Every value below is consumed through the Tailwind theme. Component code
+   must never hardcode a palette value.
+   ========================================================================== */
+
+:root {
+  /* Structure — a faint cool-warm tint keeps light mode from feeling flat/clinical */
+  --c-canvas: #f3f5f9;
+  --c-surface: #ffffff;
+  --c-surface-2: #f7f9fc;
+  --c-surface-3: #eef1f7;
+  --c-border: #e2e7ef;
+  --c-border-strong: #ccd4e0;
+  /* Text */
+  --c-text: #0f172a;
+  --c-text-muted: #4f5e70;
+  /* subtle raised from #8b97a8 (~2.9:1) to ~4.6:1 on white — meets WCAG AA. */
+  --c-text-subtle: #697586;
+  --c-text-inverse: #ffffff;
+  /* Brand — primary action + active nav only */
+  --c-primary: #2563eb;
+  --c-primary-hover: #1d4ed8;
+  --c-primary-soft: #e8effd;
+  --c-primary-text: #1b4bc0;
+  /* Semantic */
+  --c-success: #15803d;
+  --c-success-soft: #e4f5e9;
+  --c-warning: #b45309;
+  --c-warning-soft: #fdf1e0;
+  --c-danger: #b91c1c;
+  --c-danger-soft: #fdeaea;
+  --c-info: #0e7490;
+  --c-info-soft: #e3f3f6;
+  --c-neutral-soft: #eef1f5;
+  /* Navigation rail */
+  --c-rail: #0f172a;
+  --c-rail-hover: #1e293b;
+  --c-rail-text: #94a3b8;
+  /* Quiet control text (secondary / ghost buttons) — lighter than body text.
+     #64748b (slate-500) keeps ~4.6:1 on white, which is AA for button text. */
+  --c-control-text: #64748b;
+  /* Focus ring — distinct token so focus stays visible even if primary changes. */
+  --c-focus: #2563eb;
+  /* Disabled / no-permission surfaces + text, so the state is consistent. */
+  --c-disabled-surface: #eef1f6;
+  --c-disabled-text: #a5afbd;
+  /* Numeric semantics — a controlled money red/green, separate from the
+     alarm danger/success used for errors. "Numbers deserve respect." */
+  --c-numeric-negative: #c0392b;
+  --c-numeric-positive: #1d7a46;
+  /* Categorical chart palette — 5 distinct, reasonably colourblind-safe hues.
+     Charts read from these instead of borrowing primary/subtle. */
+  --c-chart-1: #2563eb;
+  --c-chart-2: #0e9488;
+  --c-chart-3: #d97706;
+  --c-chart-4: #7c3aed;
+  --c-chart-5: #db2777;
+  --c-chart-grid: var(--c-border);
+  /* Elevation — deliberately near-invisible */
+  --shadow-pop: 0 4px 14px -4px rgba(15, 23, 42, 0.14), 0 1px 3px rgba(15, 23, 42, 0.06);
+  --shadow-overlay: 0 16px 48px -12px rgba(15, 23, 42, 0.24);
+}
+
+.dark {
+  --c-canvas: #0b0f17;
+  --c-surface: #121824;
+  --c-surface-2: #161d2b;
+  --c-surface-3: #1c2433;
+  --c-border: #232c3d;
+  --c-border-strong: #33405a;
+  --c-text: #e9edf4;
+  --c-text-muted: #9aa7b9;
+  --c-text-subtle: #6b7889;
+  --c-text-inverse: #0b0f17;
+  --c-primary: #3b82f6;
+  --c-primary-hover: #60a5fa;
+  --c-primary-soft: #16243d;
+  --c-primary-text: #93c0fd;
+  --c-success: #4ade80;
+  --c-success-soft: #10251a;
+  --c-warning: #fbbf24;
+  --c-warning-soft: #261d0c;
+  --c-danger: #f87171;
+  --c-danger-soft: #2a1414;
+  --c-info: #38bdf8;
+  --c-info-soft: #0c2029;
+  --c-neutral-soft: #1c2433;
+  --c-rail: #080c13;
+  --c-rail-hover: #1a2231;
+  --c-rail-text: #8593a6;
+  --c-control-text: #9aa7b9;
+  --c-focus: #3b82f6;
+  --c-disabled-surface: #1a2231;
+  --c-disabled-text: #5e6b7d;
+  --c-numeric-negative: #f4867b;
+  --c-numeric-positive: #57c98a;
+  --c-chart-1: #60a5fa;
+  --c-chart-2: #2dd4bf;
+  --c-chart-3: #fbbf24;
+  --c-chart-4: #a78bfa;
+  --c-chart-5: #f472b6;
+  --c-chart-grid: var(--c-border);
+  --c-focus: #3b82f6;
+  --c-disabled-surface: #161d2b;
+  --c-disabled-text: #5c6a7e;
+  --c-numeric-negative: #f87171;
+  --c-numeric-positive: #4ade80;
+  --shadow-pop: 0 4px 14px -4px rgba(0, 0, 0, 0.6), 0 1px 3px rgba(0, 0, 0, 0.4);
+  --shadow-overlay: 0 16px 48px -12px rgba(0, 0, 0, 0.7);
+}
+
+html,
+body,
+#root,
+#__next {
+  height: 100%;
+}
+
+body {
+  background-color: var(--c-canvas);
+  color: var(--c-text);
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Every actionable control shows a pointer. Disabled controls never do. */
+button:not(:disabled),
+[role='button']:not([aria-disabled='true']),
+[role='tab'],
+[role='switch'],
+[role='menuitem'],
+[role='option'],
+summary,
+label[for],
+a[href] {
+  cursor: pointer;
+}
+
+button:disabled,
+[aria-disabled='true'] {
+  cursor: not-allowed;
+}
+
+/* Numbers, IDs and reference codes align on the digit everywhere. */
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: 'tnum' 1;
+}
+
+::selection {
+  background: var(--c-primary-soft);
+}
+
+/* Quiet, consistent scrollbars inside dense data surfaces. */
+.thin-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-border-strong) transparent;
+}
+
+.thin-scroll::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+}
+
+.thin-scroll::-webkit-scrollbar-thumb {
+  background: var(--c-border-strong);
+  border-radius: 99px;
+  border: 3px solid transparent;
+  background-clip: content-box;
+}
+
+.thin-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==========================================================================
+   shadcn/ui compatibility layer
+   shadcn components read these semantic HSL tokens. We map them to the EMTECH
+   palette above so any shadcn component inherits our look automatically, in
+   both light and dark mode. Values are "H S% L%" channels (no hsl() wrapper),
+   which is what shadcn's Tailwind theme expects.
+   Keep these in sync with the --c-* tokens if the palette changes.
+   ========================================================================== */
+:root {
+  --background: 210 20% 97%;
+  /* canvas #f6f7f9 */
+  --foreground: 222 47% 11%;
+  /* ink #0f172a */
+  --card: 0 0% 100%;
+  /* surface #ffffff */
+  --card-foreground: 222 47% 11%;
+  --popover: 0 0% 100%;
+  --popover-foreground: 222 47% 11%;
+  --primary: 221 83% 53%;
+  /* #2563eb */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 20% 96%;
+  /* surface-3 #f1f3f6 */
+  --secondary-foreground: 222 47% 11%;
+  --muted: 220 20% 96%;
+  --muted-foreground: 215 14% 41%;
+  /* ink-muted #5a6879 */
+  --accent: 214 92% 95%;
+  /* primary-soft #e8effd */
+  --accent-foreground: 222 63% 43%;
+  /* primary-text #1b4bc0 */
+  --destructive: 0 73% 42%;
+  /* danger #b91c1c */
+  --destructive-foreground: 0 0% 100%;
+  --border: 216 25% 91%;
+  /* #e4e8ee */
+  --input: 216 22% 84%;
+  /* border-strong #cfd6e0 */
+  --ring: 221 83% 53%;
+  /* primary */
+  --radius: 0.375rem;
+  /* matches rounded-control 6px */
+}
+
+.dark {
+  --background: 220 39% 7%;
+  /* canvas #0b0f17 */
+  --foreground: 214 33% 94%;
+  /* ink #e9edf4 */
+  --card: 220 32% 11%;
+  /* surface #121824 */
+  --card-foreground: 214 33% 94%;
+  --popover: 220 32% 11%;
+  --popover-foreground: 214 33% 94%;
+  --primary: 217 91% 60%;
+  /* #3b82f6 */
+  --primary-foreground: 0 0% 100%;
+  --secondary: 218 27% 15%;
+  /* surface-3 #1c2433 */
+  --secondary-foreground: 214 33% 94%;
+  --muted: 218 27% 15%;
+  --muted-foreground: 214 16% 66%;
+  /* ink-muted #9aa7b9 */
+  --accent: 216 45% 16%;
+  /* primary-soft #16243d */
+  --accent-foreground: 213 95% 78%;
+  /* primary-text #93c0fd */
+  --destructive: 0 91% 71%;
+  /* danger #f87171 */
+  --destructive-foreground: 220 39% 7%;
+  --border: 218 26% 19%;
+  /* #232c3d */
+  --input: 220 26% 27%;
+  /* border-strong #33405a */
+  --ring: 217 91% 60%;
+}
