@@ -27,9 +27,9 @@ export interface ModuleDashboardProps {
 export function ModuleDashboard({ moduleId }: ModuleDashboardProps) {
   const navigate = useNav();
   const config = MODULE_DASHBOARDS[moduleId];
-  const module = MODULES.find((m) => m.id === moduleId);
+  const activeModule = MODULES.find((m) => m.id === moduleId);
 
-  if (!config || !module) {
+  if (!config || !activeModule) {
     return (
       <div className="p-5">
         <EmptyState title="No dashboard" description="This module has no dashboard configured." />
@@ -37,7 +37,7 @@ export function ModuleDashboard({ moduleId }: ModuleDashboardProps) {
     );
   }
 
-  const Icon = module.icon;
+  const Icon = activeModule.icon;
   const moneyFmt = (v: number) => `KSh ${v}M`;
   const approvals = APPROVAL_QUEUE.filter((a) => a.module === moduleId);
   const totalSlice = config.chart.kind === 'donut' ? config.chart.data.reduce((s, d) => s + d.value, 0) : 0;
@@ -45,8 +45,8 @@ export function ModuleDashboard({ moduleId }: ModuleDashboardProps) {
   return (
     <div>
       <PageHeader
-        trail={[module.label, 'Dashboard']}
-        title={`${module.label} dashboard`}
+        trail={[activeModule.label, 'Dashboard']}
+        title={`${activeModule.label} dashboard`}
         meta={<span>{config.tagline}</span>}
         primaryAction={
           approvals.length > 0 ? (
@@ -64,8 +64,8 @@ export function ModuleDashboard({ moduleId }: ModuleDashboardProps) {
             <Icon className="h-5 w-5" aria-hidden />
           </span>
           <div>
-            <h2 className="text-h1 text-ink">{module.label}</h2>
-            <p className="text-body text-ink-muted">{module.blurb}</p>
+            <h2 className="text-h1 text-ink">{activeModule.label}</h2>
+            <p className="text-body text-ink-muted">{activeModule.blurb}</p>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ export function ModuleDashboard({ moduleId }: ModuleDashboardProps) {
           </Card>
 
           <Card>
-            <CardHeader title="Quick links" description={`Jump into ${module.label}.`} level={3} />
+            <CardHeader title="Quick links" description={`Jump into ${activeModule.label}.`} level={3} />
             <ul className="divide-y divide-line">
               {config.quickLinks.map((link) => (
                 <li key={link.href}>
@@ -151,7 +151,7 @@ export function ModuleDashboard({ moduleId }: ModuleDashboardProps) {
         <Card>
           <CardHeader
             title="Needs attention"
-            description={`${module.label} documents waiting on a decision.`}
+            description={`${activeModule.label} documents waiting on a decision.`}
             actions={
               approvals.length > 0 ? (
                 <Button size="sm" variant="ghost" trailingIcon={ArrowRightIcon} onClick={() => navigate('/approvals')}>
@@ -161,7 +161,7 @@ export function ModuleDashboard({ moduleId }: ModuleDashboardProps) {
             }
           />
           {approvals.length === 0 ? (
-            <EmptyState title="Nothing pending" description={`No ${module.label} documents are awaiting approval.`} />
+            <EmptyState title="Nothing pending" description={`No ${activeModule.label} documents are awaiting approval.`} />
           ) : (
             <ul className="divide-y divide-line">
               {approvals.slice(0, 5).map((item) => (

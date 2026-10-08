@@ -83,8 +83,14 @@ const jobStepTarget: UploadTarget<JobStep> = {
   add: (r) => { jobStepsStore.create(r); }
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const TARGETS: UploadTarget<any>[] = [holidayTarget, jobRoleTarget, jobStepTarget];
+// Each target is strongly typed at its own definition above; the collection
+// erases the record type to `unknown` so differently-typed targets can live in
+// one array. `build`/`add` stay internally consistent per target.
+const TARGETS: UploadTarget<unknown>[] = [
+  holidayTarget as UploadTarget<unknown>,
+  jobRoleTarget as UploadTarget<unknown>,
+  jobStepTarget as UploadTarget<unknown>
+];
 
 interface PreviewRow {
   id: string;
@@ -92,8 +98,7 @@ interface PreviewRow {
   valid: boolean;
   message: string;
   values: Record<string, string>;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  record?: Record<string, any>;
+  record?: Record<string, unknown>;
 }
 
 /** Minimal CSV parse: comma-separated, first line = header. No quoted-comma support (prototype). */
